@@ -22,20 +22,6 @@ from vlc import Instance
 from threading import Thread,Lock
 
 
-BLINK = True
-print("Determining Endpoints")
-DEVICE_ID = open('ids/device_id.txt','r').read()
-ACTIVE = True
-ENDPOINT = "http://www.korestate.com/cloud/api/beta/koFuncs.php?q={target}&deviceId=%s" % DEVICE_ID
-REM_ENDPOINT = "http://www.korestate.com/cloud/api/beta/koReminder.php?deviceId=%s" % DEVICE_ID
-LANGUAGE = "en-us"
-kobo_voice = os.path.join(os.path.abspath(os.curdir), "kobo_voice.flac")
-DEBUG = False
-
-
-GOOGLE_SPEECH_KEY = "AIzaSyAQsZ8EA5lWYn09g09TPqVkQxIbU5QxH4I"
-
-
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(11,GPIO.OUT)
@@ -68,16 +54,17 @@ lite_thread = Thread(name = 'lite', target = blink_light)
 reminder_thread.start()
 lite_thread.start()
 
-pro.vlc_playback("Hello, I am Kobo, your home assistant.  The date is %s.  Say something when you are ready to begin." % t[1])
+pro.vlc_playback("Hello, I am Heybo.  Please speak when you are ready")
 
 with sr.Microphone(sample_rate = 48000, device_index = 2, chunk_size = 5120) as source:
+    r.adjust_for_ambient_noise(source, duration = 0.5)
 
     while True:
         BLINK = False    
  #       PB = True
         print("Say Something...")
         
-#        r.adjust_for_ambient_noise(source, duration = 0.5)
+   
         audio = r.listen(source)
  #       print("Done Listening") 
         #GPIO.output(11,True) 
@@ -101,13 +88,14 @@ with sr.Microphone(sample_rate = 48000, device_index = 2, chunk_size = 5120) as 
             response = get(ENDPOINT.format(target = send_txt))
             print("Response received")
             pro.vlc_playback(response.text) 
+            time.sleep(5)
             GPIO.output(11,False)
 
 
         except sr.UnknownValueError:
             traceback.print_exc()
             pro.vlc_playback("I'm sorry I could not understand, could you repeat that?")
-
+            r.adjust_for_ambient_noise(source, duration = 0.5)
 
         except sr.RequestError:
             traceback.print_exc()

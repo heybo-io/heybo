@@ -8,17 +8,14 @@ from kgtts import gTTS
 import requests
 import RPi.GPIO as GPIO
 
-DEVICE_ID = open('ids/device_id.txt','r').read()
 
-REM_ENDPOINT = "http://www.korestate.com/cloud/api/beta/koReminder.php?deviceId=%s" % DEVICE_ID
-ACTIVE = True
 prompts = ("kobo","hobo","cobo","coco","como","comeaux","Google")
 stop_prompts = ("shut", "stop","quiet","don't listen")
 
 
 LANGUAGE = 'en-us'
 
-
+ACTIVE = True
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(11,GPIO.OUT)
@@ -115,7 +112,6 @@ class Processor(object):
         while True:
             time.sleep(.5)
             r = requests.get(REM_ENDPOINT)
-            print(r)
             if len(r.content) > 0:
                 self.vlc_playback(str(r.content))
             else:

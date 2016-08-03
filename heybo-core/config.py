@@ -18,6 +18,36 @@ from vlc import Instance
 from threading import Thread
 
 
+TEST = "TEST SUCCESSFUL"
+
+
+BLINK = True
+print("Determining Endpoints")
+DEVICE_ID = open('./ids/device_id.txt','r').read()
+ACTIVE = True
+ENDPOINT = "http://www.korestate.com/cloud/api/beta/koFuncs.php?q={target}&deviceId=%s" % DEVICE_ID
+REM_ENDPOINT = "http://www.korestate.com/cloud/api/beta/koReminder.php?deviceId=%s" % DEVICE_ID
+LANGUAGE = "en-us"
+kobo_voice = os.path.join(os.path.abspath(os.curdir), "kobo_voice.flac")
+DEBUG = False
+
+
+GOOGLE_SPEECH_KEY = "AIzaSyAQsZ8EA5lWYn09g09TPqVkQxIbU5QxH4I"
+
+
+
+
+DEVICE_ID = open('ids/device_id.txt','r').read()
+
+REM_ENDPOINT = "http://www.korestate.com/cloud/api/beta/koReminder.php?deviceId=%s" % DEVICE_ID
+ACTIVE = True
+prompts = ("kobo","hobo","cobo","coco","como","comeaux","Google")
+stop_prompts = ("shut", "stop","quiet","don't listen")
+
+
+
+
+
 
 print("Determining Endpoints")
 DEVICE_ID = open('ids/device_id.txt','r').read()
