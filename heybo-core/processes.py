@@ -8,6 +8,16 @@ from kgtts import gTTS
 import requests
 import RPi.GPIO as GPIO
 
+"""
+
+Set up Player instance like this:
+
+print("Loading VLC into memory")
+instance = Instance()
+
+print("Setting up Player")
+player = instance.media_player_new()
+"""
 
 prompts = ("kobo","hobo","cobo","coco","como","comeaux","Google")
 stop_prompts = ("shut", "stop","quiet","don't listen")
